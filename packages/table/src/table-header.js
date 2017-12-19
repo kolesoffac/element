@@ -143,6 +143,21 @@ export default {
               </tr>
             )
           }
+          { 
+            this.isRowAddition() &&
+            <tr>
+              {this._l(this.columns, (column, cellIndex) =>
+                <th>
+                  {this.table.headerRowAddition(h, { column, $index: cellIndex})}
+                </th>
+              )}
+              {
+                this.hasGutter
+                  ? <th class="gutter" style={{ width: this.layout.scrollY ? this.layout.gutterWidth + 'px' : '0' }}></th>
+                  : ''
+              }
+            </tr>
+          }
         </thead>
       </table>
     );
@@ -260,6 +275,12 @@ export default {
       } else {
         return (after < this.leftFixedLeafCount) || (start >= this.columnsCount - this.rightFixedLeafCount);
       }
+    },
+
+    isRowAddition() {
+      const {headerRowAddition} = this.table;
+
+      return (typeof headerRowAddition === 'function');
     },
 
     getHeaderRowStyle(rowIndex) {

@@ -227,6 +227,8 @@
 
       headerCellStyle: [Object, Function],
 
+      headerRowAddition: Function,
+
       highlightCurrentRow: Boolean,
 
       currentRowKey: [String, Number],
