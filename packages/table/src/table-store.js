@@ -97,6 +97,7 @@ const TableStore = function(table, initialState = {}) {
     sortingColumn: null,
     sortProp: null,
     sortOrder: null,
+    sortMap: new Map(),
     isAllSelected: false,
     selection: [],
     reserveSelection: false,
@@ -184,11 +185,18 @@ TableStore.prototype.mutations = {
     states.data = sortData((states.filteredData || states._data || []), states);
 
     if (!options || !options.silent) {
-      this.table.$emit('sort-change', {
-        column: this.states.sortingColumn,
-        prop: this.states.sortProp,
-        order: this.states.sortOrder
-      });
+      let payload;
+
+      if (this.table.isMultiSort) {
+        payload = this.states.sortMap;
+      } else {
+        payload = {
+          column: this.states.sortingColumn,
+          prop: this.states.sortProp,
+          order: this.states.sortOrder
+        };
+      }
+      this.table.$emit('sort-change', payload);
     }
 
     Vue.nextTick(() => this.table.updateScrollY());

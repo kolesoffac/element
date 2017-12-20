@@ -452,6 +452,14 @@
     }
   }
 
+  .sort-caret-order {
+    font-weight: normal;
+    font-size: 10px;
+    position: absolute;
+    top: -7px;
+    right: -6px;
+  }
+
   .ascending .sort-caret.ascending {
     color: $--color-primary;
   }

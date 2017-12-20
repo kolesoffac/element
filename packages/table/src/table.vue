@@ -239,6 +239,11 @@
 
       defaultSort: Object,
 
+      isMultiSort: {
+        type: Boolean,
+        default: false
+      },
+
       tooltipEffect: String,
 
       spanMethod: Function
