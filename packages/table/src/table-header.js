@@ -123,6 +123,7 @@ export default {
                             </i>
                             <i class="sort-caret descending el-icon-caret-bottom" on-click={ ($event) => this.handleSortClick($event, column, 'descending') }>
                             </i>
+                            {this.isUseSortColumn(column) && <span class="sort-caret-order">{this.getMultiSortOrder(column)}</span>}
                           </span>
                         : ''
                     }
@@ -318,7 +319,17 @@ export default {
     },
 
     getHeaderCellClass(rowIndex, columnIndex, row, column) {
-      const classes = [column.id, column.order, column.headerAlign, column.className, column.labelClassName];
+      const classes = [column.id, column.headerAlign, column.className, column.labelClassName];
+
+      if (this.table.isMultiSort) {
+        const {states} = this.store;
+        const {property} = column;
+        const sortColumn = states.sortMap.get(property);
+
+        sortColumn && classes.push(sortColumn.order);
+      } else {
+        classes.push(column.order);
+      };
 
       if (rowIndex === 0 && this.isCellHidden(columnIndex, row)) {
         classes.push('is-hidden');
@@ -345,6 +356,32 @@ export default {
       }
 
       return classes.join(' ');
+    },
+
+    getKeysSortMap() {
+      const {states} = this.store;
+      const keysSortMap = Array.from(states.sortMap.keys());
+      let keysSortArray = [];
+
+      keysSortMap.forEach(key => keysSortArray.push(key));
+
+      return keysSortArray;
+    },
+
+    isUseSortColumn(column) {
+      const {property} = column;
+      const keysSortMap = this.getKeysSortMap();
+
+      return this.table.isMultiSort && keysSortMap.includes(property);
+    },
+    
+    getMultiSortOrder(column) {
+      const {property} = column;
+
+      const keysSortMap = this.getKeysSortMap();
+      const order = keysSortMap.indexOf(property);
+
+      return order + 1;
     },
 
     toggleAllSelection() {
@@ -525,7 +562,7 @@ export default {
       let sortProp = states.sortProp;
       let sortOrder;
       const sortingColumn = states.sortingColumn;
-
+      
       if (sortingColumn !== column) {
         if (sortingColumn) {
           sortingColumn.order = null;
@@ -544,6 +581,22 @@ export default {
 
       states.sortProp = sortProp;
       states.sortOrder = sortOrder;
+      
+      if (this.table.isMultiSort) {
+        const prop = column.property;
+        const sortColumn = states.sortMap.get(prop);
+        let order = givenOrder || this.toggleOrder(sortColumn && sortColumn.order);
+        
+        if (sortColumn) {
+          if (order) {
+            order != sortColumn.order && states.sortMap.set(prop, {prop, order});
+          } else {
+            states.sortMap.delete(prop);
+          };
+        } else {
+          order && states.sortMap.set(prop, {prop, order});
+        };
+      };
 
       this.store.commit('changeSortCondition');
     }
