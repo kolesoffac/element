@@ -466,9 +466,14 @@ TableStore.prototype.clearFilter = function() {
 TableStore.prototype.clearSort = function() {
   const states = this.states;
   if (!states.sortingColumn) return;
-  states.sortingColumn.order = null;
-  states.sortProp = null;
-  states.sortOrder = null;
+
+  if (this.table.isMultiSort) {
+    states.sortMap.clear();
+  } else {
+    states.sortingColumn.order = null;
+    states.sortProp = null;
+    states.sortOrder = null;
+  };
 
   this.commit('changeSortCondition', {
     silent: true
