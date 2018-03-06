@@ -7,3 +7,6 @@ lib
 coverage
 *.md
 *.scss
+packages/table/src/table-store.js
+packages/table/src/table-header.js
+packages/table/src/table-body.js
