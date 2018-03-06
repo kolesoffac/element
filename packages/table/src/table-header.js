@@ -135,7 +135,7 @@ export default {
               }
               {
                 this.hasGutter
-                  ? <th class="gutter" style={{ width: this.layout.scrollY ? this.layout.gutterWidth + 'px' : '0' }}></th>
+                  ? <th class="gutter" style={{ width: this.tableLayout.scrollY ? this.tableLayout.gutterWidth + 'px' : '0' }}></th>
                   : ''
               }
               </tr>
@@ -151,7 +151,7 @@ export default {
               )}
               {
                 this.hasGutter
-                  ? <th class="gutter" style={{ width: this.layout.scrollY ? this.layout.gutterWidth + 'px' : '0' }}></th>
+                  ? <th class="gutter" style={{ width: this.tableLayout.scrollY ? this.tableLayout.gutterWidth + 'px' : '0' }}></th>
                   : ''
               }
             </tr>
