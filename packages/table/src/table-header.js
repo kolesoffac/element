@@ -141,7 +141,7 @@ export default {
               </tr>
             )
           }
-          { 
+          {
             this.isRowAddition() &&
             <tr>
               {this._l(this.columns, (column, cellIndex) =>
@@ -368,7 +368,7 @@ export default {
 
       return this.table.isMultiSort && keysSortMap.includes(property);
     },
-    
+
     getMultiSortOrder(column) {
       const {property} = column;
 
@@ -560,13 +560,7 @@ export default {
       let sortProp = states.sortProp;
       let sortOrder;
       const sortingColumn = states.sortingColumn;
-<<<<<<< HEAD
-      
-      if (sortingColumn !== column) {
-=======
-
       if (sortingColumn !== column || (sortingColumn === column && sortingColumn.order === null)) {
->>>>>>> origin/master
         if (sortingColumn) {
           sortingColumn.order = null;
         }
@@ -584,15 +578,15 @@ export default {
 
       states.sortProp = sortProp;
       states.sortOrder = sortOrder;
-      
+
       if (this.table.isMultiSort) {
         const prop = column.property;
         const sortColumn = states.sortMap.get(prop);
         let order = givenOrder || this.toggleOrder(sortColumn && sortColumn.order);
-        
+
         if (sortColumn) {
           if (order) {
-            order != sortColumn.order && states.sortMap.set(prop, {prop, order});
+            order !== sortColumn.order && states.sortMap.set(prop, {prop, order});
           } else {
             states.sortMap.delete(prop);
           };

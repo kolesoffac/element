@@ -43,7 +43,7 @@ export default {
         <tbody>
           {
             this._l(this.data, (row, $index) =>
-              [<tr
+              [(<tr
                 style={ this.rowStyle ? this.getRowStyle(row, $index) : null }
                 key={ this.table.rowKey ? this.getKeyOfRow(row, $index) : $index }
                 on-dblclick={ ($event) => this.handleDoubleClick($event, row) }
@@ -110,14 +110,14 @@ export default {
                     }
                   })
                 }
-              </tr>,
-              this.store.isRowExpanded(row)
-                ? (<tr>
-                  <td colspan={ this.columns.length } class="el-table__expanded-cell">
-                    { this.table.renderExpanded ? this.table.renderExpanded(h, { row, $index, store: this.store }) : ''}
-                  </td>
-                </tr>)
-                : ''
+              </tr>),
+                this.store.isRowExpanded(row)
+                  ? (<tr>
+                    <td colspan={ this.columns.length } class="el-table__expanded-cell">
+                      { this.table.renderExpanded ? this.table.renderExpanded(h, { row, $index, store: this.store }) : ''}
+                    </td>
+                  </tr>)
+                  : ''
               ]
             ).concat(
               <el-tooltip effect={ this.table.tooltipEffect } placement="top" ref="tooltip" content={ this.tooltipContent }></el-tooltip>
