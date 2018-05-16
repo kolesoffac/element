@@ -111,23 +111,26 @@
           top: layout.headerHeight + 'px'
         },
         fixedBodyHeight]">
-        <table-body
-          fixed="left"
-          :store="store"
-          :stripe="stripe"
-          :highlight="highlightCurrentRow"
-          :row-class-name="rowClassName"
-          :row-style="rowStyle"
-          :style="{
-            width: layout.fixedWidth ? layout.fixedWidth + 'px' : ''
-          }">
-        </table-body>
-        <div
-          v-if="$slots.append"
-          class="el-table__append-gutter"
-          :style="{
-            height: layout.appendHeight + 'px'
-          }"></div>
+        <div class="el-table__fixed-body-wrapper__scroller">
+          <table-body
+            fixed="left"
+            :store="store"
+            :stripe="stripe"
+            :highlight="highlightCurrentRow"
+            :row-class-name="rowClassName"
+            :row-style="rowStyle"
+            :style="{
+              width: layout.fixedWidth ? layout.fixedWidth + 'px' : ''
+            }">
+          </table-body>
+          <div
+            v-if="$slots.append"
+            class="el-table__append-gutter"
+            :style="{
+              height: layout.appendHeight + 'px'
+            }">
+          </div>
+        </div>
       </div>
       <div
         v-if="showSummary"
