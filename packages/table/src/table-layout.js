@@ -57,9 +57,16 @@ class TableLayout {
     }
     this.height = value;
 
-    if (!el && (value || value === 0)) return Vue.nextTick(() => this.setHeight(value, prop));
+    if (!el && (value || value === 0)) {
+      // strict multi call setHeight
+      this.isSettingHeight = true;
+      return Vue.nextTick(() => {
+        this.isSettingHeight && this.setHeight(value, prop);
+      });
+    };
 
     if (typeof value === 'number') {
+      this.isSettingHeight = false;
       el.style[prop] = value + 'px';
 
       this.updateElsHeight();
