@@ -581,11 +581,11 @@
         immediate: true,
         handler(value) {
           this.store.commit('setData', value);
-          if (this.$ready) {
-            this.$nextTick(() => {
-              this.doLayout();
-            });
-          }
+          // if (this.$ready) {
+          //   this.$nextTick(() => {
+          //     this.doLayout();
+          //   });
+          // }
         }
       },
 
