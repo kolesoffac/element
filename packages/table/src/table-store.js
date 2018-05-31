@@ -181,6 +181,7 @@ TableStore.prototype.mutations = {
       let payload;
 
       if (this.table.isMultiSort) {
+        this.states.sortMap = new Map(this.states.sortMap);
         payload = this.states.sortMap;
       } else {
         payload = {
